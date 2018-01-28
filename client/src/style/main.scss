@@ -1,9 +1,12 @@
 @import './theme/fonts';
-// @import './theme/forms';
+@import './theme/colors';
 
 @import './utilities/reset';
 
+@import './mixins/all';
+
 @import './components/app';
+@import './components/file-data-display';
 
 $fa-font-path: "~font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';

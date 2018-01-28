@@ -30,6 +30,7 @@ class FileDataForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImage = this.handleImage.bind(this);
     this.renderImage = this.renderImage.bind(this);
+    this.renderPreview = this.renderPreview.bind(this);
   }
 
   handleChange(e) {
@@ -45,16 +46,6 @@ class FileDataForm extends React.Component {
     }
   }
 
-  renderImage() {
-    const { path, preview } = this.state;
-    return path ? (<img src={path} />) : null;
-    return preview ? (
-      <figure>
-        <img src={preview} alt="preview of upload" />
-        <figcaption>Preview</figcaption>
-      </figure>) : null;
-  }
-
   handleImage(e) {
     const { files } = e.target;
     const visualAsset = files[0];
@@ -67,11 +58,25 @@ class FileDataForm extends React.Component {
       .catch(console.error);
   }
 
+  renderImage() {
+    const { name, path } = this.state;
+    return path ? (<img src={path} alt={name} />) : null;
+  }
+
+  renderPreview() {
+    const { preview } = this.state;
+    return preview ? (
+      <figure>
+        <img src={preview} alt="preview of upload" />
+        <figcaption>Preview</figcaption>
+      </figure>) : null;
+  }
+
   render() {
     const { type } = this.props;
     return (
 
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="visual-form">
 
         <input
           name="name"
@@ -97,7 +102,7 @@ class FileDataForm extends React.Component {
 
         <label>
           {this.renderImage()}
-
+          {this.renderPreview()}
           <input
             name="path"
             type="file"

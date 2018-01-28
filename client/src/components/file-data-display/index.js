@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 
 import FileDataForm from '../file-data-form';
 
@@ -19,18 +20,22 @@ class FileDataDisplay extends React.Component {
   render() {
     const { toDisplay, fileDateUpdate } = this.props;
     return (
-      <ul>
+      <ul className="file-data-container">
         {toDisplay.map(item =>
           (
-            <li key={item._id}>{item.name}
-              <FileDataForm fileData={item} submitHandler={fileDateUpdate} type="updater" />
-              <span
+            <li key={item._id}>
+              <FontAwesome
+                className="delete-button"
                 role="button"
                 tabIndex={0}
-                id={item._id}
                 onClick={this.handleDelete}
-              > x
-              </span>
+                id={item._id}
+                name="times"
+              />
+
+              <h4>{item.name}
+              </h4>
+              <FileDataForm fileData={item} submitHandler={fileDateUpdate} type="updater" />
             </li>))}
       </ul>
     );
