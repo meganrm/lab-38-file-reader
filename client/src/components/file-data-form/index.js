@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FileDataType } from '../../state/file-data/types';
+import { photoToDataUrl } from '../../util/fileData';
 
 const FileDataDefault = {
   name: '',
@@ -9,6 +10,7 @@ const FileDataDefault = {
   user_name: '',
   path: '',
   description: '',
+  preview: '',
 };
 
 const buttonMap = {
@@ -26,6 +28,8 @@ class FileDataForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImage = this.handleImage.bind(this);
+    this.renderImage = this.renderImage.bind(this);
   }
 
   handleChange(e) {
@@ -39,6 +43,28 @@ class FileDataForm extends React.Component {
     if (type === 'creator') {
       this.setState({ ...FileDataDefault });
     }
+  }
+
+  renderImage() {
+    const { path, preview } = this.state;
+    return path ? (<img src={path} />) : null;
+    return preview ? (
+      <figure>
+        <img src={preview} alt="preview of upload" />
+        <figcaption>Preview</figcaption>
+      </figure>) : null;
+  }
+
+  handleImage(e) {
+    const { files } = e.target;
+    const visualAsset = files[0];
+    this.setState({ visualAsset });
+    console.log(visualAsset);
+    photoToDataUrl(visualAsset)
+      .then((preview) => {
+        this.setState({ preview });
+      })
+      .catch(console.error);
   }
 
   render() {
@@ -68,13 +94,17 @@ class FileDataForm extends React.Component {
           placeholder="Enter a description"
           onChange={this.handleChange}
         />
-        <input
-          name="path"
-          type="text"
-          value={this.state.path}
-          placeholder="Enter the filepath"
-          onChange={this.handleChange}
-        />
+
+        <label>
+          {this.renderImage()}
+
+          <input
+            name="path"
+            type="file"
+            onChange={this.handleImage}
+          />
+
+        </label>
 
         <button type="submit">{buttonMap[type]}</button>
 

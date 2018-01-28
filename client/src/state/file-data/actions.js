@@ -1,6 +1,6 @@
 /* globals __API_URL__ */
 import superagent from 'superagent';
-import cookie from 'react-cookies';
+import cookies from 'react-cookies';
 
 const API = `${__API_URL__}/visual_files`;
 
@@ -24,7 +24,8 @@ const deleteAction = id => ({
   payload: id,
 });
 
-const bearerToken = () => cookie.load('auth');
+
+const bearerToken = () => cookies.load('auth');
 
 export const init = () => (dispatch) => {
   superagent.get(API)
@@ -56,4 +57,27 @@ export const remove = id => (dispatch) => {
     .set('Authorization', `Bearer ${bearerToken()}`)
     .then(() => dispatch(deleteAction(id)))
     .catch(console.error);
+};
+
+
+export const uploadImage = data => (dispatch) => {
+  const token = cookies.load('auth');
+
+  const URL = `${__API_URL__}/upload`;
+  console.log(data);
+  superagent.post(URL)
+    .set('Authorization', `Bearer ${token}`)
+    .attach('newImage', data.visualAsset)
+    .then((res) => {
+      const metadata = {
+        path: res.body.url,
+        name: data.name,
+        description: data.description,
+      };
+      metadata.visualAsset = null;
+      delete metadata.visualAsset;
+      console.log(metadata);
+      dispatch(create(metadata));
+    })
+    .catch(e => console.error('ERROR', e.message));
 };

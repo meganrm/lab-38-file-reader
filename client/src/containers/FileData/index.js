@@ -41,7 +41,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fileDataCreate: fileData => dispatch(fileDataActions.create(fileData)),
+  fileDataCreate: fileData => dispatch(fileDataActions.uploadImage(fileData)),
   fileDataDelete: id => dispatch(fileDataActions.remove(id)),
   fileDataInitialize: () => dispatch(fileDataActions.init()),
   fileDateUpdate: fileData => dispatch(fileDataActions.update(fileData)),

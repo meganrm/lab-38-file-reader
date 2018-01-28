@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const fileMetaDataSchema = new mongoose.Schema({
   name: {type: String, required: true},
   date: {type: Date, default: Date.now()},
-  user_name: {type: String, required: true},
-  user_id : {type: mongoose.Schema.Types.ObjectId, ref:'users'},
+  // user_name: {type: String, required: true},
+  // user_id : {type: mongoose.Schema.Types.ObjectId, ref:'users'},
   path : {type: String, required: true, unique: true},
   description : {type: String, required: true},
 });

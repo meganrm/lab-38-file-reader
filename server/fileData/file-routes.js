@@ -2,10 +2,13 @@
 
 const express = require('express');
 const jsonParser = require('body-parser').json();
-const FileData = require('./model');
+
 const ServerError = require('../lib/error');
 const bearerAuth = require('../lib/bearer-auth');
 const userHandler = require('../user/user-auth-middleware');
+
+const FileData = require('./model');
+
 
 const fileRouter = module.exports = express.Router();
 
@@ -38,11 +41,14 @@ fileRouter.get('/visual_files/:id', (req, res, next) => {
 });
 
 fileRouter.post('/visual_files', bearerAuth, userHandler.getUserById, jsonParser, (req, res, next) => {
-  req.body.userId = req.user._id;
+  // req.body.userId = req.user._id;
+  console.log('post, req.body', req.body);
   let newFileData = new FileData(req.body);
+  console.log('__newFileData___', newFileData);
   newFileData.save() // saves the file to the database
     .then(data => res.status(200).send(data))
     .catch((err) => {
+      console.log(err);
       next(errorCheck(err, newFileData));
     });
 });
