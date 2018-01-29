@@ -25,21 +25,33 @@ class AuthForm extends React.Component {
     e.preventDefault();
 
     const handler = e.target.dataset.handler === 'signup' ? this.props.handleCreate : this.props.handleLogin;
-
     handler(this.state)
       .then()
       .catch(console.error);
   }
 
   render() {
-    const username =
+    const email = (
+      <label htmlFor="email">
+        <span>Email Address</span>
+        <input
+          type="email"
+          name="email"
+          placeholder="email"
+          value={this.state.email}
+          required="true"
+          onChange={this.handleChange}
+        />
+      </label>
+    );
+    const displayName =
       (
         <label htmlFor="username">
-          <span>Username</span>
+          <span>Display Name</span>
           <input
             type="text"
             name="username"
-            placeholder="username"
+            placeholder="Your name"
             value={this.state.username}
             required="true"
             onChange={this.handleChange}
@@ -70,7 +82,7 @@ class AuthForm extends React.Component {
 
           <h2>Sign in</h2>
 
-          {username}
+          {email}
           {password}
 
           <button type="submit">Login</button>
@@ -82,21 +94,8 @@ class AuthForm extends React.Component {
 
           <h2>Sign up</h2>
 
-          <label htmlFor="email">
-            <span>Email Address</span>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="email"
-              value={this.state.email}
-              required="true"
-              onChange={this.handleChange}
-            />
-          </label>
-
-          {username}
-
+          {email}
+          {displayName}
           {password}
 
           <button type="submit">Create Account</button>

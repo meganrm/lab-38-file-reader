@@ -8,10 +8,22 @@ export default (state = defaultState, action) => {
 
   switch (type) {
     case 'SET_AUTH_TOKEN':
-      return { token: payload.token };
+      return {
+        user: {
+          token: payload.token,
+          username: payload.user.username,
+          email: payload.user.email,
+        },
+      };
 
     case 'SET_AUTH_USER':
-      return { token: payload.token };
+      return {
+        user: {
+          token: payload.token,
+          username: payload.user.username,
+          email: payload.user.email,
+        },
+      };
 
     case 'DELETE_AUTH_TOKEN':
       return defaultState;

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const FileDataType = {
+export default {
   name: PropTypes.string,
   date: PropTypes.sting,
   user: PropTypes.string,

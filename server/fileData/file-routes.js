@@ -41,7 +41,7 @@ fileRouter.get('/visual_files/:id', (req, res, next) => {
 });
 
 fileRouter.post('/visual_files', bearerAuth, userHandler.getUserById, jsonParser, (req, res, next) => {
-  // req.body.userId = req.user._id;
+  req.body.userId = req.user._id;
   console.log('post, req.body', req.body);
   let newFileData = new FileData(req.body);
   console.log('__newFileData___', newFileData);

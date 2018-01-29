@@ -1,3 +1,6 @@
+$fa-font-path: "~font-awesome/fonts";
+@import '~font-awesome/scss/font-awesome.scss';
+
 @import './theme/fonts';
 @import './theme/colors';
 
@@ -7,6 +10,3 @@
 
 @import './components/app';
 @import './components/file-data-display';
-
-$fa-font-path: "~font-awesome/fonts";
-@import '~font-awesome/scss/font-awesome.scss';

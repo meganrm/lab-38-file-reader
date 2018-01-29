@@ -4,31 +4,16 @@
 const mongoose = require('mongoose');
 
 const fileMetaDataSchema = new mongoose.Schema({
-  name: {type: String, required: true},
+  filename: {type: String, required: true},
   date: {type: Date, default: Date.now()},
-  // user_name: {type: String, required: true},
-  // user_id : {type: mongoose.Schema.Types.ObjectId, ref:'users'},
+  userId : {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   path : {type: String, required: true, unique: true},
   description : {type: String, required: true},
 });
 
-//
-// fileMetaDataSchema.pre('save', function(done){
-//   User.findById(this.user)
-//     .then(user => {
-//       if (! user) {
-//         let newUser = new User({name: 'name'});
-//         return newUser.save();
-//       }
-//       else { return user; }
-//     })
-//     .then( user => this.user = user._id )
-//     .then( () => done() )
-//     .catch(console.log);
-// });
-//
-// fileMetaDataSchema.pre('findOne', function(){
-//   this.populate('users');
-// });
+fileMetaDataSchema.pre('find', function(){
+  console.log('finding');
+  this.populate({ path: 'userId', select: 'username' });
+});
 
 module.exports = mongoose.model('filemetadata', fileMetaDataSchema); // collection, Schema, creates constructor function

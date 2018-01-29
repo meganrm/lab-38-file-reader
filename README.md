@@ -1,34 +1,22 @@
 401 JS --  Lab 38 photo uploads
 ===
 
-## Submission Instructions
-  * Work in a fork of this repository
-  * Work in a branch on your fork
-  * Write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-duncan`
-  * Submit a pull request to this repository
-  * Submit a link to your pull request on canvas
-  * Submit a question, observation, and how long you spent on canvas  
+This allows you to upload image. It keeps track of who uploaded them. You can also change the fields, or change the image.
 
-
-## Requirements  
-#### backend setup
-* use [sluggram](http://github.com/slugbyte/sluggram) 
-* or use your mid 401 project
-
- 
-#### Feature Tasks 
-* Create a SettingsContainer
-  * give the user the ablity to create or update thier profile
-  
-* Create a DashboardContainer
-  * give the user the abilty to create, read, update and destroy photos
-
-#### Test
-* Test your redux reducers 
-* Test your util methods
-
-## Bonus 2pts
-* Create full crud for two resources 
-
-####  Documentation  
-Write a description of the project in your README.md
+#### running locally
+.env file:
+- PORT=5000
+- DB_URL=mongodb://localhost:27017/visual_files_dev
+- APP_SECRET=thisissupersecret
+- NODE_ENV=dev
+- API_URL=http://localhost:5000/api/v1
+- AUTH_URL=http://localhost:5000/api/v1
+- CORS_ORIGINS=http://localhost:8080
+- IMAGECLOUD_SECRET=[some totally secrett hing]
+- AWS_BUCKET=[bucket name]
+- AWS_ACCESS_KEY_ID=[access key]
+- AWS_SECRET_ACCESS_KEY=[secret access key]
+===
+- in /server, run `npm run dev`, `npm run mongo`
+- in /client, run `npm run watch`
+- connect to localhost:8080

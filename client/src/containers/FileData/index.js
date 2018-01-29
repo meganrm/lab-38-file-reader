@@ -1,13 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-import * as fileDataActions from '../../state/file-data/actions';
+import fileDataState from '../../state/file-data';
+import authState from '../../state/auth';
 
 import FileDataForm from '../../components/file-data-form';
 import FileDataDisplay from '../../components/file-data-display';
-
-import { FileDataType } from '../../state/file-data/types';
 
 class FileData extends React.Component {
   componentWillMount() {
@@ -17,6 +16,7 @@ class FileData extends React.Component {
 
   render() {
     const {
+      user,
       fileDataCreate,
       fileDataArray,
       fileDataDelete,
@@ -25,7 +25,7 @@ class FileData extends React.Component {
 
     return (
       <div>
-        <FileDataForm submitHandler={fileDataCreate} type="creator" />
+        <FileDataForm submitHandler={fileDataCreate} type="creator" user={user} />
         <FileDataDisplay
           toDisplay={fileDataArray}
           fileDataDelete={fileDataDelete}
@@ -38,21 +38,23 @@ class FileData extends React.Component {
 
 const mapStateToProps = state => ({
   fileDataArray: state.fileData,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fileDataCreate: fileData => dispatch(fileDataActions.uploadImage(fileData)),
-  fileDataDelete: id => dispatch(fileDataActions.remove(id)),
-  fileDataInitialize: () => dispatch(fileDataActions.init()),
-  fileDateUpdate: fileData => dispatch(fileDataActions.update(fileData)),
+  fileDataCreate: fileData => dispatch(fileDataState.actions.uploadImage(fileData)),
+  fileDataDelete: id => dispatch(fileDataState.actions.remove(id)),
+  fileDataInitialize: () => dispatch(fileDataState.actions.init()),
+  fileDateUpdate: fileData => dispatch(fileDataState.actions.updateImage(fileData)),
 });
 
 FileData.propTypes = {
   fileDataInitialize: PropTypes.func.isRequired,
-  fileDataArray: PropTypes.arrayOf(PropTypes.shape(FileDataType)).isRequired,
+  fileDataArray: PropTypes.arrayOf(PropTypes.shape(fileDataState.type)).isRequired,
   fileDataCreate: PropTypes.func.isRequired,
   fileDataDelete: PropTypes.func.isRequired,
   fileDateUpdate: PropTypes.func.isRequired,
+  user: PropTypes.shape(authState.type),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileData);

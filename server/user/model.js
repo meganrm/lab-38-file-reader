@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   username: {type: String, required: true},
   group: {type: String},
   password : {type: String, require: true},
-  email : {type: String},
+  email : {type: String, require: true},
   assets : [{}],
 });
 

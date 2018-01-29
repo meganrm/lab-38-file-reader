@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import * as authActions from '../../state/auth/actions';
+import authState from '../../state/auth';
+
 import AuthForm from '../../components/auth-form';
 
 class Auth extends React.Component {
@@ -21,13 +22,13 @@ class Auth extends React.Component {
 
   renderAuthForm() {
     const { auth } = this.props;
-    return auth.token ?
+    return auth.user ?
       null : (<AuthForm handleCreate={this.props.authCreate} handleLogin={this.props.authLogin} />);
   }
 
   renderChildren() {
     const { auth, children } = this.props;
-    return auth.token ? children : null;
+    return auth.user ? children : null;
   }
 
   render() {
@@ -42,15 +43,14 @@ class Auth extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => ({
   auth: state.auth,
 });
 
 const mapDispatchToProps = dispatch => ({
-  authLogin: user => dispatch(authActions.authLogin(user)),
-  authCreate: user => dispatch(authActions.authCreateAccount(user)),
-  authLogout: () => dispatch(authActions.authLogout()),
+  authLogin: user => dispatch(authState.actions.authLogin(user)),
+  authCreate: user => dispatch(authState.actions.authCreateAccount(user)),
+  authLogout: () => dispatch(authState.actions.authLogout()),
 });
 
 Auth.propTypes = {
@@ -58,7 +58,9 @@ Auth.propTypes = {
   authLogin: PropTypes.func.isRequired,
   authCreate: PropTypes.func.isRequired,
   authLogout: PropTypes.func.isRequired,
-  auth: PropTypes.shape({ token: PropTypes.string }).isRequired,
+  auth: PropTypes.shape({
+    user: PropTypes.shape(authState.type),
+  }).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);

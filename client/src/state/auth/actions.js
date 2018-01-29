@@ -16,7 +16,7 @@ export const authLogin = (user = {}) => (dispatch) => {
 
   const authenticateUsingBasic = newUser => superagent.get(`${__AUTH_URL__}/signin`)
     .withCredentials()
-    .auth(newUser.username, newUser.password);
+    .auth(newUser.email, newUser.password);
 
   let authMethod = () => authenticateUsingBasic(user);
 

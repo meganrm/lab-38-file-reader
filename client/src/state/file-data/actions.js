@@ -42,8 +42,9 @@ export const create = payload => (dispatch) => {
     .catch(console.error);
 };
 
-export const update = payload => (dispatch) => {
+export const updateData = payload => (dispatch) => {
   const url = `${API}`;
+  console.log();
   superagent.put(url)
     .set('Authorization', `Bearer ${bearerToken()}`)
     .send(payload)
@@ -59,24 +60,47 @@ export const remove = id => (dispatch) => {
     .catch(console.error);
 };
 
-
-export const uploadImage = data => (dispatch) => {
+export const updateImage = data => (dispatch) => {
   const token = cookies.load('auth');
-
   const URL = `${__API_URL__}/upload`;
-  console.log(data);
+
+  // no image to uplaod
+  if (!data.visualAsset) {
+    return dispatch(updateData(data));
+  }
+
   superagent.post(URL)
     .set('Authorization', `Bearer ${token}`)
     .attach('newImage', data.visualAsset)
     .then((res) => {
       const metadata = {
         path: res.body.url,
-        name: data.name,
+        filename: data.filename,
+        description: data.description,
+        _id: data._id,
+      };
+      metadata.visualAsset = null;
+      delete metadata.visualAsset;
+      dispatch(updateData(metadata));
+    })
+    .catch(e => console.error('ERROR', e.message));
+};
+
+export const uploadImage = data => (dispatch) => {
+  const token = cookies.load('auth');
+
+  const URL = `${__API_URL__}/upload`;
+  superagent.post(URL)
+    .set('Authorization', `Bearer ${token}`)
+    .attach('newImage', data.visualAsset)
+    .then((res) => {
+      const metadata = {
+        path: res.body.url,
+        filename: data.filename,
         description: data.description,
       };
       metadata.visualAsset = null;
       delete metadata.visualAsset;
-      console.log(metadata);
       dispatch(create(metadata));
     })
     .catch(e => console.error('ERROR', e.message));

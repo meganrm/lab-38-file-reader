@@ -6,7 +6,7 @@ let userHandler = module.exports = {};
 
 userHandler.getUserByName = (req, res, next) => {
 
-  User.findOne({username: req.auth.username})
+  User.findOne({email: req.auth.email})
     .then(user => {
       if (!user) {
         return next({statusCode: 400, message: 'no user'});
@@ -46,7 +46,6 @@ userHandler.signIn = (req, res, next) => {
 };
 
 userHandler.createUser = (req, res, next) => {
-
   const password = req.body.password;
   delete req.body.password;
 
@@ -56,7 +55,7 @@ userHandler.createUser = (req, res, next) => {
         .then(user => {
           let token = user.generateToken();
           res.cookie('auth', token, { maxAge: 10000000 });
-          res.send(token);
+          res.send({user,token});
         })
         .catch(err => {
           next({statusCode: 400, message: err.message});

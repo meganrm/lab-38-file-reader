@@ -7,7 +7,7 @@ describe('file data reducer', () => {
     path: 'path',
     description: 'description',
     user_name: 'user name',
-    id: 'id',
+    _id: 'id',
   };
 
   describe('create new file data', () => {
@@ -15,7 +15,7 @@ describe('file data reducer', () => {
       const newState = reducer(initalState, { type: 'CREATE', payload: mockFileData });
 
       expect(newState).toEqual([{
-        description: 'description', id: 'id', name: 'name', path: 'path', user_name: 'user name',
+        description: 'description', _id: 'id', name: 'name', path: 'path', user_name: 'user name',
       }]);
     });
   });
@@ -27,16 +27,16 @@ describe('file data reducer', () => {
         path: 'updated-path',
         description: 'description',
         user_name: 'user name',
-        id: 'id',
+        _id: 'id',
       };
       const newState = reducer(initalState, { type: 'CREATE', payload: mockFileData });
       const updatedState = reducer(newState, { type: 'UPDATE', payload: updatedFileData });
 
       expect(newState).toEqual([{
-        description: 'description', id: 'id', name: 'name', path: 'path', user_name: 'user name',
+        description: 'description', _id: 'id', name: 'name', path: 'path', user_name: 'user name',
       }]);
       expect(updatedState).toEqual([{
-        description: 'description', id: 'id', name: 'name', path: 'updated-path', user_name: 'user name',
+        description: 'description', _id: 'id', name: 'name', path: 'updated-path', user_name: 'user name',
       }]);
     });
   });
@@ -44,10 +44,10 @@ describe('file data reducer', () => {
   describe('remove file data', () => {
     test('it takes and id and removes the item', () => {
       const newState = reducer(initalState, { type: 'CREATE', payload: mockFileData });
-      const removedState = reducer(newState, { type: 'DELETE', payload: mockFileData.id });
+      const removedState = reducer(newState, { type: 'DELETE', payload: mockFileData._id });
 
       expect(newState).toEqual([{
-        description: 'description', id: 'id', name: 'name', path: 'path', user_name: 'user name',
+        description: 'description', _id: 'id', name: 'name', path: 'path', user_name: 'user name',
       }]);
       expect(removedState).toEqual([]);
     });

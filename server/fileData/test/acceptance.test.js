@@ -49,7 +49,7 @@ describe('visual_files API', () => {
     });
 
     test('it should get a single metadata object given a valid id', () => {
-      let testdata = new FileData({name:'get-name', description: 'description-to-get', path: 'test-path'});
+      let testdata = new FileData({filename:'get-name', description: 'description-to-get', path: 'test-path'});
       return (testdata).save()
         .then((filedata) => {
           return request

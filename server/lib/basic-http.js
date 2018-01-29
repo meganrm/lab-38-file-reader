@@ -6,10 +6,10 @@ module.exports = function(req, res, next) {
     let buffer = new Buffer(base64Header, 'base64');
     let authArray = buffer.toString().split(':');
     let authObject = {
-      username : authArray[0],
+      email : authArray[0],
       password: authArray[1],
     };
-    if (!authObject.username || ! authObject.password) {
+    if (!authObject.email || ! authObject.password) {
       throw new Error('authenticat seyz noooooo!!!!');
     }
     req.auth = authObject;

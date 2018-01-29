@@ -1,8 +1,8 @@
 'use strict';
 
 let required = {
-  user: ['name'],
-  filemetadata: ['path', 'description', 'name'],
+  user: ['username', 'email'],
+  filemetadata: ['path', 'description', 'filename'],
 };
 
 //FROM: mdn on custom errors
